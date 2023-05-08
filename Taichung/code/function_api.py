@@ -27,6 +27,21 @@ def concat_col(data_basic_path, years, file_name ,col_names, output_dir, savefil
     df.to_csv(concat_path_file, index=False)
     return('Success')
 
+# no year col
+def noYear_concat_col(data_basic_path, years, file_name ,col_names, output_dir, savefileName) :
+    df = pd.DataFrame()
+
+    for year in years:
+        print(year + ' Concating Please wait'+ ' . . . .'  )
+        data = pd.read_csv(data_basic_path +  year + '/' + file_name, usecols=col_names)
+
+        df = pd.concat([df, data], axis=0)
+
+    concat_path_file = output_dir + "{}_concat.csv".format(savefileName)
+    print('Saving in' + concat_path_file + '. . . .')
+    df.to_csv(concat_path_file, index=False)
+    return('Success')
+
 
 # 統計 colName 種類個數。 input type => count(dataFram, string)
 def count(dataFram, colName):
