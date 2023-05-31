@@ -1,6 +1,7 @@
 import pandas as pd
 from collections import Counter
 
+import re
 import time
 import random
 import requests
@@ -49,6 +50,17 @@ def count(dataFram, colName):
     # age_range = age_df['ePatientT04'].value_counts() // .value_counts() 不好取值
     return class_Counter
 
+# 字典裡種類計數 (df[欄]資料, 字典名稱)
+def dict_count(colData, dictName, value=None):
+    for i in colData:
+        data = ishan(i) + value
+
+        for item_dict in dictName:
+            if data == item_dict:
+                dictName[item_dict] += 1
+            else:
+                pass
+    return dictName
 
 # 統計年齡分段。input type => class_Counter = 個年齡總數 、type = dict
 def ageRange_sum(class_Counter):
@@ -92,3 +104,9 @@ def location(proxy, address):
         return [line[1], line[2]]
     except ValueError as err:
         print(err)
+
+
+def ishan(txt):
+    pattern = re.compile("[\u4e00-\u9fa5]")
+    return "".join(pattern.findall(txt))
+
